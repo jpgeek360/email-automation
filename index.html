@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Automation Manual | Make + Gmail API Quickstart</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-bolt text-white text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Small Business Playbook</span>
+                    <h1 class="text-sm font-bold text-white">Email Automation Manual</h1>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#problem" class="hover:text-indigo-400 transition">The Problem</a>
+                <a href="#solution" class="hover:text-indigo-400 transition">How It Works</a>
+                <a href="#blueprint" class="hover:text-indigo-400 transition">What's Inside</a>
+                <a href="#faq" class="hover:text-indigo-400 transition">FAQ</a>
+            </nav>
+            <div>
+                <button onclick="openCheckout()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 text-sm">
+                    Get Access • $5.99
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-900">
+        <!-- Glow background effect -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-indigo-600/15 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-inner">
+                    <i class="fa-solid fa-shield-halved text-indigo-400"></i>
+                    <span>Zero-Cost Automation Playbook for Local Businesses</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
+                    Stop Losing Customers to Slow Replies. Build a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400">24/7 Automated Lead Response System</span> in 30 Minutes.
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    Discover how to connect Make.com and the Gmail API for <strong class="text-white">$0/month</strong>. Automatically reply to client inquiries in seconds and log leads into Google Sheets without writing a single line of code.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                    <button onclick="openCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-xl shadow-indigo-600/40 transition transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+                        <span>Get the Manual Now for Just $5.99</span>
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-medium">
+                    <span class="flex items-center space-x-1.5"><i class="fa-solid fa-file-pdf text-indigo-400"></i> <span>Instant PDF Download (40 Pages)</span></span>
+                    <span class="flex items-center space-x-1.5"><i class="fa-solid fa-check-circle text-emerald-400"></i> <span>Zero Monthly Software Cost</span></span>
+                    <span class="flex items-center space-x-1.5"><i class="fa-solid fa-lock text-amber-400"></i> <span>Secure Checkout</span></span>
+                </div>
+            </div>
+
+            <!-- Visual Workflow Preview Box -->
+            <div class="mt-16 max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+                <div class="absolute -top-3 left-8 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider">
+                    The Automation Pipeline
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 text-center">
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center text-xl mb-3 border border-red-500/20">
+                            <i class="fa-brands fa-google"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">1. Gmail API Watcher</h3>
+                        <p class="text-xs text-slate-400">Securely monitors incoming client quote requests 24/7.</p>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-3 border border-indigo-500/20">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">2. Make.com Scenario</h3>
+                        <p class="text-xs text-slate-400">Processes filters and routes message data instantly.</p>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-3 border border-emerald-500/20">
+                            <i class="fa-solid fa-table"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">3. Sheets & Auto-Reply</h3>
+                        <p class="text-xs text-slate-400">Logs leads in Google Sheets & sends instant professional replies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section id="problem" class="py-20 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-semibold uppercase tracking-wider text-red-400 bg-red-950/60 border border-red-900/50 px-3 py-1 rounded-full">The Real Cost of Delayed Replies</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-4">Why Local Businesses Lose Revenue Every Single Day</h2>
+                <p class="text-slate-400">Manual email management is draining your time and sending valuable high-paying clients straight to your competitors.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl relative">
+                    <div class="text-4xl font-black text-red-500 mb-2">78%</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Buy From First Responder</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Delays in replying send valuable local buyers directly to competing shops who answer within minutes.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl relative">
+                    <div class="text-4xl font-black text-amber-500 mb-2">12 hrs</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Average Small Biz Reply Time</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Manual sorting during busy production hours leads to missed order requests and forgotten inquiries.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl relative">
+                    <div class="text-4xl font-black text-indigo-400 mb-2">3 hrs</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Wasted Daily on Repetition</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Owners spend hours typing identical pricing and availability answers instead of growing their core business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study & Solution Section -->
+    <section id="solution" class="py-20 bg-slate-900/50 border-y border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-900/50 px-3 py-1 rounded-full">Practical Case Study</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-6">Tested on Real Local Shops: Sweet Treats Bakery</h2>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Our manual walks through a real-world implementation for a boutique confectionery receiving 50+ custom quote inquiries every weekend. 
+                    </p>
+                    <ul class="space-y-4 mb-8 text-sm text-slate-300">
+                        <li class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span><strong>Zero Agency Fees:</strong> Saved over $2,500 in custom developer quotes by building it themselves in 30 minutes.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span><strong>Instant Auto-Reply:</strong> Customers receive custom confirmation and pricing estimates in under 5 seconds.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span><strong>Automated Logging:</strong> Every inquiry automatically populates Google Sheets with customer name, event date, and order type.</span>
+                        </li>
+                    </ul>
+                    <button onclick="openCheckout()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition text-sm">
+                        Get the Step-by-Step Blueprint ($5.99)
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center justify-between">
+                        <span>Real Results Achieved</span>
+                        <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2.5 py-1 rounded-md font-semibold">Verified Impact</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="text-2xl font-black text-indigo-400 mb-1">10+ hrs</div>
+                            <div class="text-xs text-slate-400 font-medium">Saved Weekly in Admin Work</div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="text-2xl font-black text-emerald-400 mb-1">&lt; 5 sec</div>
+                            <div class="text-xs text-slate-400 font-medium">Instant Lead Response Speed</div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="text-2xl font-black text-amber-400 mb-1">+25%</div>
+                            <div class="text-xs text-slate-400 font-medium">Order Conversion Increase</div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="text-2xl font-black text-violet-400 mb-1">$0/mo</div>
+                            <div class="text-xs text-slate-400 font-medium">Software Cost on Free Tiers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Inside / Blueprint -->
+    <section id="blueprint" class="py-20 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-900/50 px-3 py-1 rounded-full">Comprehensive 40-Page Manual</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-4">Your Complete Step-by-Step Blueprint</h2>
+                <p class="text-slate-400">Everything you need to go from manual inbox chaos to fully automated lead tracking without technical headaches.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold mb-4 border border-indigo-500/30">01</div>
+                    <h3 class="font-bold text-white mb-2">Google Cloud Setup</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Configure your project and securely generate OAuth 2.0 Client IDs & Secrets without exposing credentials.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold mb-4 border border-indigo-500/30">02</div>
+                    <h3 class="font-bold text-white mb-2">Make.com Integration</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Connect Gmail API modules, set watch triggers for unread orders, and filter out promotional spam.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold mb-4 border border-indigo-500/30">03</div>
+                    <h3 class="font-bold text-white mb-2">Google Sheets Sync</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Map dynamic variables (Name, Email, Order Type, Date) into a centralized lead tracking database instantly.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold mb-4 border border-indigo-500/30">04</div>
+                    <h3 class="font-bold text-white mb-2">Advanced Routing</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Learn conditional branching (Routers) to send tailored email templates based on specific product lines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Box Section -->
+    <section class="py-20 bg-gradient-to-b from-slate-950 to-indigo-950/30 border-t border-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/50 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden text-center">
+                <div class="absolute -right-20 -top-20 w-60 h-60 bg-indigo-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+                
+                <span class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Instant Access Digital PDF</span>
+                
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-6 mb-4">Start Automating Your Inbox Today</h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto mb-8">
+                    Reclaim your valuable time, eliminate manual admin fatigue, and secure local client contracts in seconds.
+                </p>
+
+                <div class="flex items-baseline justify-center space-x-2 mb-8">
+                    <span class="text-5xl sm:text-6xl font-black text-white">$5.99</span>
+                    <span class="text-slate-400 text-sm font-medium">/ one-time payment</span>
+                </div>
+
+                <button onclick="openCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-lg px-10 py-4 rounded-xl shadow-xl shadow-indigo-600/40 transition transform hover:-translate-y-1 mb-6">
+                    Get Instant Access Now — $5.99
+                </button>
+
+                <div class="flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400 font-medium">
+                    <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> 40-Page Illustrated PDF</span>
+                    <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Step-by-Step Screenshots</span>
+                    <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Lifetime Access</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-slate-950">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-900/50 px-3 py-1 rounded-full">Got Questions?</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-bold text-white flex justify-between items-center focus:outline-none">
+                        <span>Do I need any coding or programming skills?</span>
+                        <i class="fa-solid fa-chevron-down text-indigo-400 transition-transform duration-200"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 text-sm hidden leading-relaxed">
+                        Not at all! This manual is specifically designed for non-technical small business owners. Make.com uses a visual drag-and-drop canvas where you simply connect modules with intuitive lines—zero code required.
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-bold text-white flex justify-between items-center focus:outline-none">
+                        <span>Is Make.com really free to use?</span>
+                        <i class="fa-solid fa-chevron-down text-indigo-400 transition-transform duration-200"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 text-sm hidden leading-relaxed">
+                        Yes! Make.com offers a robust free tier providing 1,000 operations per month. For a typical local business receiving 300-330 inquiries monthly, the free tier covers 100% of your operational needs at $0/month.
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-bold text-white flex justify-between items-center focus:outline-none">
+                        <span>How long does the setup process take?</span>
+                        <i class="fa-solid fa-chevron-down text-indigo-400 transition-transform duration-200"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 text-sm hidden leading-relaxed">
+                        Following our step-by-step screenshots and instructions, most business owners have their complete automated email response and Google Sheets tracking system live and tested in about 30 minutes.
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-bold text-white flex justify-between items-center focus:outline-none">
+                        <span>How do I receive the manual after purchasing?</span>
+                        <i class="fa-solid fa-chevron-down text-indigo-400 transition-transform duration-200"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 text-sm hidden leading-relaxed">
+                        Delivery is immediate! Once your secure payment of $5.99 is completed, you will instantly receive a direct download link to the 40-page PDF manual on your screen and via email.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-bolt text-xs"></i>
+                </div>
+                <span class="font-bold text-white text-sm">Small Business Playbook</span>
+            </div>
+            <p class="mb-4">Email Automation Manual: Make + Gmail API Quickstart. All rights reserved.</p>
+            <p class="max-w-xl mx-auto text-slate-600">Disclaimer: This guide provides educational tutorials for third-party automation tools. Make.com and Google Workspace are registered trademarks of their respective owners.</p>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal Simulation -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="checkoutStep1">
+                <div class="text-center mb-6">
+                    <span class="text-xs bg-indigo-950 text-indigo-400 px-3 py-1 rounded-full font-semibold">Secure Checkout</span>
+                    <h3 class="text-xl font-bold text-white mt-3">Email Automation Manual</h3>
+                    <p class="text-2xl font-black text-white mt-1">$5.99 <span class="text-xs text-slate-400 font-normal">One-time payment</span></p>
+                </div>
+
+                <form onsubmit="processPayment(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address for Delivery</label>
+                        <input type="email" required placeholder="you@yourbusiness.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Card Information</label>
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white flex items-center justify-between">
+                            <input type="text" placeholder="4242 •••• •••• 4242" class="bg-transparent w-full focus:outline-none">
+                            <div class="flex space-x-2 text-slate-400">
+                                <i class="fa-brands fa-cc-visa"></i>
+                                <i class="fa-brands fa-cc-mastercard"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition text-sm mt-2">
+                        Complete Secure Purchase ($5.99)
+                    </button>
+                </form>
+                <p class="text-center text-[10px] text-slate-500 mt-4"><i class="fa-solid fa-lock text-emerald-400"></i> Encrypted & secure 256-bit checkout</p>
+            </div>
+
+            <div id="checkoutStep2" class="text-center py-8 hidden">
+                <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Payment Successful!</h3>
+                <p class="text-slate-400 text-sm mb-6">Thank you for your purchase. Your 40-page PDF manual has been sent to your email.</p>
+                <button onclick="closeCheckout()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            // Toggle open state
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function openCheckout() {
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            document.getElementById('checkoutStep1').classList.remove('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            document.getElementById('checkoutStep1').classList.add('hidden');
+            document.getElementById('checkoutStep2').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
